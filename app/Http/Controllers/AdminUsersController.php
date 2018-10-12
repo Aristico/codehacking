@@ -40,25 +40,27 @@ class AdminUsersController extends Controller
      */
     public function store(UsersRequest $request)
     {
-        $input = $request->all();
+        $input = $request->all(); // ruft die Daten des Requests als Array ab!
 
-        if ($file = $request->file('photo_id')) {
+        if ($file = $request->file('photo_id')) { // Schaut ob eine Datei dabei ist
 
-            $name = time() . $file->getClientOriginalName();
+            $name = time() . $file->getClientOriginalName(); // Ruft den Dateinamen ab
 
-            $file->move('images', $name);
+            $file->move('images', $name); // Speichert die Datei im Ordner "Images" mit dem Namen $name
 
-            $photo = Photo::create(['file'=>$name]);
+            $photo = Photo::create(['file'=>$name]);    // Speichert den Dateinamne in der Tabelle Fotos und speichert die Infos
+                                                        // in der Variable photo
 
-            $input['photo_id'] = $photo->id;
+            $input['photo_id'] = $photo->id;            // schreibt die ID ist aus der photos Datenbank in dem Array aus dem Formular
+                                                        // Vorher stand dort der Dateiname drin.
 
         }
 
-        $input['password'] = bcrypt($request->password);
+        $input['password'] = bcrypt($request->password); // Verschlüsselt das Passwort mit bcrypt.
 
-        User::create($input);
+        User::create($input); // legt den User an
 
-        return redirect('/users');
+        return redirect('/users'); // leitet weiter an die Users Seite
 
     }
 
