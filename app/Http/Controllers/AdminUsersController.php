@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersEditRequest;
 use App\Http\Requests\UsersRequest;
 use App\Photo;
 use App\Role;
@@ -83,7 +84,9 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.users.edit');
+        $roles = Role::pluck('name', 'id');
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('roles', 'user'));
     }
 
     /**
@@ -93,9 +96,39 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UsersEditRequest $request, $id)
     {
-        //
+
+        If(trim($request->password) == '') {
+
+            $input = $request->except('password');
+
+        } else {
+
+            $input = $request->all(); // ruft die Daten des Requests als Array ab!
+            $input['password'] = bcrypt($request->password);
+
+        }
+
+
+        if ($file = $request->file('photo_id')) { // Schaut ob eine Datei dabei ist
+
+            $name = time() . $file->getClientOriginalName(); // Ruft den Dateinamen ab
+
+            $file->move('images', $name); // Speichert die Datei im Ordner "Images" mit dem Namen $name
+
+            $photo = Photo::create(['file'=>$name]);    // Speichert den Dateinamne in der Tabelle Fotos und speichert die Infos
+                                                        // in der Variable phot
+            $input['photo_id'] = $photo->id;            // schreibt die ID ist aus der photos Datenbank in dem Array aus dem Formular
+                                                        // Vorher stand dort der Dateiname drin.
+
+        }
+
+        $user = User::findOrFail($id);
+
+        $user->update($input);
+
+        return redirect('/users');
     }
 
     /**
