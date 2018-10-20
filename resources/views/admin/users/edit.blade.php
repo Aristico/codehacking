@@ -40,10 +40,16 @@
                    {!! Form::password('password', ['title'=>'password', 'class'=>'form-control'] ) !!}
                 </div>
                 <div class="form-group">
-                   {!! Form::submit('Create User', ['class'=>'btn btn-primary'] ) !!}
+                   {!! Form::submit('Create User', ['class'=>'btn btn-primary col-sm-2 mr-5'] ) !!}
                 </div>
             {!! Form::close() !!}
-
+            <!-- bei Action den Controller und die Methode eintrage z.B. UserController@Create -->
+            {!! Form::open(['action'=>['AdminUsersController@destroy', $user->id], 'method' => 'delete']) !!}
+                {{csrf_field()}}
+                <div class="form-group">
+                   {!! Form::submit('Delete User', ['class'=>'btn btn-danger col-sm-2'] ) !!}
+                </div>
+            {!! Form::close() !!}
         </div>
     </div>
 

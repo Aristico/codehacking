@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 
-@section('content');
+@section('content')
+
+    @if(session()->has('success_message'))
+        <div class="alert alert-success">{{session('success_message')}}</div>
+    @endif
+
+
 
     <h1>Users</h1>
 
