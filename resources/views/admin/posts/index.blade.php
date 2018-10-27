@@ -4,6 +4,10 @@
 
     <h1>Posts</h1>
 
+    @if(session()->has('success_message'))
+        <div class="alert alert-success">{{session('success_message')}}</div>
+    @endif
+
     <table class="table">
         <thead>
             <tr>
@@ -26,7 +30,7 @@
                         <td> <img height="50px" src="{{$post->photo ? $post->photo->file : '/images/typ.jpg' }}"></td>
                         <td> {{$post->user->name}} </td>
                         <td> {{$post->category ? $post->category->name : 'no category'}} </td>
-                        <td> {{$post->title}} </td>
+                        <td> <a href="{{route('posts.edit', $post->id)}}"> {{$post->title}} </a> </td>
                         <td> {{$post->body}} </td>
                         <td> {{$post->created_at->diffForHumans()}} </td>
                         <td> {{$post->updated_at->diffForHumans()}} </td>

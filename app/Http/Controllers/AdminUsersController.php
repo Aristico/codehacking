@@ -101,6 +101,8 @@ class AdminUsersController extends Controller
     public function update(UsersEditRequest $request, $id)
     {
 
+        $user = User::findOrFail($id);
+
         If(trim($request->password) == '') {
 
             $input = $request->except('password');
@@ -115,10 +117,12 @@ class AdminUsersController extends Controller
 
         if ($file = $request->file('photo_id')) { // Schaut ob eine Datei dabei ist
 
+            if ($user->photo) {
+                unlink(public_path() . $user->photo->file);
+                Photo::findOrFail($user->photo_id)->delete();
+            }
             $name = time() . $file->getClientOriginalName(); // Ruft den Dateinamen ab
-
             $file->move('images', $name); // Speichert die Datei im Ordner "Images" mit dem Namen $name
-
             $photo = Photo::create(['file'=>$name]);    // Speichert den Dateinamne in der Tabelle Fotos und speichert die Infos
                                                         // in der Variable phot
             $input['photo_id'] = $photo->id;            // schreibt die ID ist aus der photos Datenbank in dem Array aus dem Formular
@@ -130,7 +134,7 @@ class AdminUsersController extends Controller
 
         $user->update($input);
 
-        return redirect('/users');
+        return redirect(route('users.index'));
     }
 
     /**
@@ -142,9 +146,16 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        $posts = $user->posts;
+
+        foreach ($posts as $post) {
+            unlink(public_path() . $post->photo->file);
+            $post->delete();
+        }
+
         unlink(public_path() . $user->photo->file);
         $user->delete();
         Session::flash('success_message', 'The User has been deleted');
-        return redirect('/users');
+        return redirect(route('users.index'));
     }
 }

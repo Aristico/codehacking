@@ -40,7 +40,7 @@
                    {!! Form::password('password', ['title'=>'password', 'class'=>'form-control'] ) !!}
                 </div>
                 <div class="form-group">
-                   {!! Form::submit('Create User', ['class'=>'btn btn-primary col-sm-2 mr-5'] ) !!}
+                   {!! Form::submit('Edit User', ['class'=>'btn btn-primary col-sm-2 mr-5'] ) !!}
                 </div>
             {!! Form::close() !!}
             <!-- bei Action den Controller und die Methode eintrage z.B. UserController@Create -->
