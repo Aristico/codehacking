@@ -14,12 +14,7 @@
     <!-- Bootstrap Core CSS -->
 
     <link href="{{asset('css/libs.css')}}" rel="stylesheet">
-    <!--<link href="{{asset('css/blog-post.css')}}" rel="stylesheet">
-    <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
-    <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet">
-    <link href="{{asset('css/metisMenu.css')}}" rel="stylesheet">
-    <link href="{{asset('css/sb-admin-2.css')}}" rel="stylesheet">-->
-    <link href="{{asset('css/libs.css')}}" rel="stylesheet">
+    <!--<link href="{{asset('css/app.css')}}" rel="stylesheet">-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -27,8 +22,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
-
+    @yield('styles')
+    @yield('scriptshead')
 
 </head>
 
@@ -148,6 +143,10 @@
                                 <a href="{{route('posts.create')}}">Create Post</a>
                             </li>
 
+                             <li>
+                                <a href="{{route('comments.index')}}">All Comments</a>
+                            </li>
+
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
@@ -173,11 +172,11 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Media<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/media">All Media</a>
+                                <a href="{{route('media.index')}}">All Media</a>
                             </li>
 
                             <li>
-                                <a href="">Upload Media</a>
+                                <a href="{{route('media.create')}}">Upload Media</a>
                             </li>
 
                         </ul>

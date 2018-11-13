@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('includes.tiny')
+
     <h1>Create Post</h1>
 
     <!-- bei Action den Controller und die Methode eintrage z.B. UserController@Create -->

@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+
 
 class Post extends Model
 {
+    use Sluggable;
+
     protected $fillable = [
         'photo_id',
         'category_id',
@@ -30,6 +34,23 @@ class Post extends Model
 
         return $this->belongsTo('App\Photo');
 
+    }
+
+    public function comments () {
+
+        return $this->hasMany('App\Comment');
+
+    }
+
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title',
+                'onUpdate' => true,
+            ]
+        ];
     }
 
 }

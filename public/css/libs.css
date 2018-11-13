@@ -8692,3 +8692,9 @@ table.dataTable thead .sorting:after {
   padding-top:0px;
 
 }
+
+.form-toggle {
+
+  display: none;
+
+}

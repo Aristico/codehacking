@@ -31,13 +31,19 @@
                         <td> {{$post->user->name}} </td>
                         <td> {{$post->category ? $post->category->name : 'no category'}} </td>
                         <td> <a href="{{route('posts.edit', $post->id)}}"> {{$post->title}} </a> </td>
-                        <td> {{$post->body}} </td>
+                        <td> {!! $post->body !!} </td>
                         <td> {{$post->created_at->diffForHumans()}} </td>
                         <td> {{$post->updated_at->diffForHumans()}} </td>
+                        <td> <a href="{{route('post', $post->slug)}}"> Show Post </a></td>
+                        <td> <a href="{{route('comments.show', $post->id)}}"> Show Comments </a></td>
                     </tr>
                 @endforeach
             @endif
         </tbody>
     </table>
-
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            {{$posts->render()}}
+        </div>
+    </div>
 @endsection
